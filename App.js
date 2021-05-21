@@ -1,16 +1,17 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import useBluetooth from './src/hooks/use-bluetooth';
-import DevicesScreen from './src/screens/Devices';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
+import DevicesScreen from './src/components/Devices';
+import Form from './src/components/Form';
+import DeviceContext from './src/context/device';
 
 const App = () => {
-  const {device} = useBluetooth();
+  const {device} = React.useContext(DeviceContext);
 
   return (
     <SafeAreaView>
-      {!!device && <Text>{device.address}</Text>}
       <View style={styles.main}>
-        <DevicesScreen />
+        {!!device && <Form />}
+        {!device && <DevicesScreen />}
       </View>
     </SafeAreaView>
   );

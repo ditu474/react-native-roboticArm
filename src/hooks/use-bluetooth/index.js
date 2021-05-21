@@ -4,7 +4,6 @@ import requestAccessFineLocationPermission from '../../utils/location-permission
 
 const ENABLE_BLUETOOTH = 'ENABLE_BLUETOOTH';
 const DISABLE_BLUETOOTH = 'DISABLE_BLUETOOTH';
-const DEVICE_SELECTED = 'DEVICE_SELECTED';
 const ERROR = 'ERROR';
 const START_SEARCH = 'START_SEARCH';
 const SEARCH_ENDED = 'SEARCH_ENDED';
@@ -20,11 +19,6 @@ const bluetoothReducer = (state, action) => {
       return {
         ...state,
         isBluetoothEnabled: false,
-      };
-    case DEVICE_SELECTED:
-      return {
-        ...state,
-        device: action.device,
       };
     case ERROR:
       return {
@@ -52,7 +46,6 @@ export default function useBluetooth() {
   const [bluetoothState, dispatch] = React.useReducer(bluetoothReducer, {
     isBluetoothEnabled: false,
     devices: [],
-    deviceSelected: null, //TODO: ADD THIS IN CONTEXT https://github.com/ditu474/aula-taller-react/blob/main/src/store/auth-context/index.js
     isSearching: false,
     error: '',
   });
@@ -77,11 +70,6 @@ export default function useBluetooth() {
       disabledSubscription.remove();
     };
   }, []);
-
-  const selectDevice = newDevice => {
-    //TODO: ADD THIS IN CONTEXT
-    dispatch({type: DEVICE_SELECTED, device: newDevice});
-  };
 
   const findDevices = React.useCallback(async () => {
     dispatch({type: ERROR, error: ''});
@@ -121,7 +109,6 @@ export default function useBluetooth() {
 
   return {
     ...bluetoothState,
-    selectDevice,
     findDevices,
     cancelFind,
   };

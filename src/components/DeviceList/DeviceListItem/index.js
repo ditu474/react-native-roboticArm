@@ -1,12 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import useBluetooth from '../../../hooks/use-bluetooth';
+import DeviceContext from '../../../context/device';
 
 export default function DeviceListItem({device}) {
-  const {selectDevice} = useBluetooth();
+  const {connectToDevice} = React.useContext(DeviceContext);
 
   const onPressHandler = () => {
-    selectDevice(device);
+    connectToDevice(device);
   };
 
   return (
